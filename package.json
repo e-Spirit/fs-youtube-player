@@ -1,9 +1,11 @@
 {
   "name": "fs-youtube-player",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "FirstSpirits Shoppable (YouTube) Video Player - Demo",
   "source": "src/fs-youtube-player.js",
   "main": "dist/fs-youtube-player.js",
+  "unpkg": "dist/fs-youtube-player.js",
+  "module": "dist/fs-youtube-player.js",
   "scripts": {
     "build": "microbundle bundle ./src/fs-youtube-player.js --format esm",
     "demo:build:watch": "microbundle watch ./src/fs-youtube-player.js --format esm --output ./demo/dist",
