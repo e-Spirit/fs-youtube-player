@@ -1,0 +1,35 @@
+{
+  "name": "fs-youtube-player",
+  "version": "0.0.1",
+  "description": "FirstSpirits Shoppable (YouTube) Video Player - Demo",
+  "source": "src/fs-youtube-player.js",
+  "main": "dist/fs-youtube-player.js",
+  "scripts": {
+    "build": "microbundle bundle ./src/fs-youtube-player.js --format esm",
+    "demo:build:watch": "microbundle watch ./src/fs-youtube-player.js --format esm --output ./demo/dist",
+    "demo:server:watch": "servor ./demo ./index.html 8080 --reload --silent --browse",
+    "demo": "concurrently npm:demo:*"
+  },
+  "author": "e-Spirit AG",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/breidler-es/fs-youtube-player.git"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "microbundle": "^0.12.1",
+    "prettier": "^2.0.5",
+    "servor": "^4.0.2"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "htmlWhitespaceSensitivity": "css",
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  }
+}

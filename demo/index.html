@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FirstSpirits Shoppable (YouTube) Video Player - Demo</title>
+    <link rel="stylesheet" href="./demo.css" />
+    <style>
+      fs-youtube-player {
+        background: linear-gradient(180deg, #efefef 0%, #fff 100%);
+      }
+      fs-youtube-player [data-time] {
+        text-align: center;
+        user-select: none;
+        font-size: 1.25em;
+        line-height: 1.2;
+      }
+      @media (max-width: 75.25rem) {
+        fs-youtube-player [data-time] {
+          font-size: 1.5vw;
+        }
+      }
+      @media (max-width: 600px) {
+        fs-youtube-player [data-time] {
+          font-size: 3.5vw;
+        }
+      }
+      fs-youtube-player img {
+        max-width: 100%;
+        object-fit: contain;
+        max-height: 100%;
+      }
+      fs-youtube-player a {
+        display: flex;
+        text-decoration: none;
+        cursor: pointer;
+        color: inherit;
+        padding: 1rem;
+        flex-direction: column;
+        flex: 1;
+        justify-content: space-between;
+        text-align: center;
+        background: #fff;
+      }
+      fs-youtube-player a .button {
+        line-height: 2.5rem;
+        text-align: center;
+        background: #000;
+        color: #fff;
+        display: block;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+      fs-youtube-player a:hover .button {
+        background: #fe4859;
+      }
+      fs-youtube-player a .picture {
+        flex: 1;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        margin: 0 0 1rem;
+      }
+      fs-youtube-player a .price {
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 1;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <hgroup>
+        <h2>Watch it. <b>Shop it:</b></h2>
+        <h3>Collection Autumn / Winter 2020.</h3>
+      </hgroup>
+
+      <fs-youtube-player video-id="wMXhaMGpA1A" nocookie muted>
+        <!--
+          optional attributes:
+            nocookie - don't use youtube cookies in player; force GDPR
+            muted    - inital mute the video player
+        -->
+
+        <div data-time="0">
+          <img src="./img/icon-basket.svg" />
+          <br /><strong>You like what you see?</strong><br />
+          You can buy the<br />
+          Products from the video<br />
+          right here.
+        </div>
+
+        <div data-time="10">
+          <a href="#/boots">
+            <span class="picture" style="background-image: url('./img/boots.png');"></span>
+            Boots<br />
+            brown<br />
+            <b class="price">149,90 €</b>
+            <span class="button">Shop now</span>
+          </a>
+        </div>
+
+        <div data-time="20">
+          <a href="#/pink-shoe">
+            <span class="picture" style="background-image: url('./img/shoes.png');"></span>
+            Shoes<br />
+            <b class="price">139,90 €</b>
+            <span class="button">Shop now</span>
+          </a>
+        </div>
+      </fs-youtube-player>
+    </div>
+
+    <script type="module" src="./dist/fs-youtube-player.js"></script>
+  </body>
+</html>
