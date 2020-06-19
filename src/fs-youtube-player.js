@@ -77,16 +77,10 @@ class FsYoutubePlayer extends HTMLElement {
     const $e = (selectors, eventName, handlerFn) =>
       (typeof selectors === 'string' ? $s(selectors) : selectors).addEventListener(eventName, handlerFn);
 
-    const syncBulletToView = () => {
-      const offset = $s('#items-container').scrollTop;
-      const [{ bullet }] = this.items
-        .map(({ node, bullet }) => ({ dist: Math.abs(Math.abs(node.offsetTop) - offset), bullet }))
-        .sort(({ dist: a }, { dist: b }) => a - b);
-      bullet.checked = true;
-    };
-
-    let timerId;
-    $e('#items-container', 'scroll', () => clearTimeout(timerId) || (timerId = setTimeout(syncBulletToView, 30)));
+    $e('#items-container', 'scroll', () => {
+      const visibleIndex = Math.round($s('#items-container').scrollTop / this.items[0].node.offsetHeight);
+      this.items[visibleIndex].bullet.checked = true;
+    });
 
     $e('slot', 'slotchange', () => {
       const bullets = $s('#bullets');
@@ -99,7 +93,7 @@ class FsYoutubePlayer extends HTMLElement {
         .map((item, i, arr) => {
           const bullet = appendTo(bullets, 'input', { type: 'radio', name: 'items', checked: i === 0 });
           const match = i + 1 === arr.length ? (t) => t >= arr[i].time : (t) => t >= arr[i].time && t < arr[i + 1].time;
-          const show = () => (item.node.offsetParent.scrollTop = item.node.offsetTop);
+          const show = () => $s('#items-container').scrollTo({ top: i * item.node.offsetHeight, behavior: 'smooth' });
           $e(item.node, 'click', () => show());
           $e(bullet, 'click', () => this.goTo(item.node));
           Object.assign(item, { bullet, match, show });
