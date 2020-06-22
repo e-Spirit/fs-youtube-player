@@ -34,7 +34,7 @@ template.innerHTML = /* html */ `
     #nextItem { transform: rotate(180deg); }
     ::slotted(:not([data-time])) { display: none; }
     ::slotted([data-time]:not([data-time=''])) { flex: 1; display: flex; flex-direction: column; box-sizing: border-box; scroll-snap-align: center; height: 100%; overflow: hidden; justify-content: center; }
-    @media (max-width: 600px) {
+    @media (max-width: 750px) {
       :host { grid-template-columns: 1fr calc(var(--bullets)); grid-template-rows: 1fr 1fr; }
       #video-box { grid-column: 1 / 3; }
       input[type='button'] { display: none; }
@@ -104,10 +104,10 @@ class FsYoutubePlayer extends HTMLElement {
     });
 
     $e('#prevItem', 'click', (e) => {
-      e.preventDefault() || e.target.form.querySelector(':checked')?.previousElementSibling?.[__item].show();
+      e.preventDefault() || e.target.form.querySelector(':checked')?.previousElementSibling?.[__item].bullet.click();
     });
     $e('#nextItem', 'click', (e) => {
-      e.preventDefault() || e.target.form.querySelector(':checked')?.nextElementSibling?.[__item].show();
+      e.preventDefault() || e.target.form.querySelector(':checked')?.nextElementSibling?.[__item].bullet.click();
     });
     $e('#items', 'mouseenter', () => (this[__item] = false));
     $e('#items', 'touchstart', () => (this[__item] = false));

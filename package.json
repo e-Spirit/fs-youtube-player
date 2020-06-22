@@ -1,6 +1,6 @@
 {
   "name": "fs-youtube-player",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "FirstSpirits Shoppable (YouTube) Video Player - Demo",
   "source": "src/fs-youtube-player.js",
   "main": "dist/fs-youtube-player.js",
