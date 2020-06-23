@@ -41,6 +41,9 @@ template.innerHTML = /* html */ `
       #items-container { top: 0; bottom: 0; left: 0; }
       #bullets-box { padding: 0; margin: 0; }
     }
+    :host([no-items]) { grid-template-columns: 1fr; }
+    :host([no-items]) #items-box, :host([no-items]) #bullets-box { display: none; }
+    :host([no-items]) #video-box { margin: 0 calc((var(--items-width) + var(--bullets) + 1em) / 2); }
   </style>
   <div id="video-box">
     <div id="player">
@@ -101,6 +104,7 @@ class FsYoutubePlayer extends HTMLElement {
           return item;
         });
       $s('#items-container').style.setProperty('--items-count', this.items.length);
+      this.items.length ? this.removeAttribute('no-items') : this.setAttribute('no-items', '');
     });
 
     $e('#prevItem', 'click', (e) => {
