@@ -22,7 +22,8 @@ template.innerHTML = /* html */ `
     #player { height: 0; padding-bottom: calc(100% / var(--ratio)); background: black; position: relative; overflow: hidden; }
     #player iframe { border: 0; padding: 0; margin: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     #items-box { position: relative; flex: 1; }
-    #items-container { position: absolute; top: var(--bullets); right: 0; bottom: var(--bullets); left: var(--bullets); overflow-x: hidden; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; scroll-snap-type: y mandatory; }
+    #items-container { position: absolute; top: var(--bullets); right: 0; bottom: var(--bullets); left: var(--bullets); overflow-x: hidden; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; scroll-snap-type: y mandatory; -ms-overflow-style: none; scrollbar-width: none; }
+    #items-container::-webkit-scrollbar { display: none; }
     #items { height: calc(var(--items-count) * 100%); display: flex; flex-direction: column; }
     #bullets-box { display: flex; flex-direction: column; padding: var(--bullets) 0; margin: 0 0.5em; }
     #bullets-box input { -webkit-appearance: none; -moz-appearance: none; outline: none; cursor: pointer; }
