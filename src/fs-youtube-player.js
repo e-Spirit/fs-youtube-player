@@ -3,12 +3,11 @@ const appendTo = (targetElement, newTag, attributes) =>
 
 const getYouTubePlayer = (iframe) => {
   const YT_API_URL = 'https://www.youtube.com/iframe_api';
-  document.querySelector(`script[src="${YT_API_URL}"]`) ||
-    appendTo(document.body, 'script', { async: 'async', src: YT_API_URL });
+  document.querySelector(`script[src="${YT_API_URL}"]`) || appendTo(document.body, 'script', { src: YT_API_URL });
 
   return new Promise((resolve) => {
     (function check() {
-      window.YT?.loaded
+      window.YT && YT.loaded
         ? new YT.Player(iframe, { events: { onReady: ({ target }) => resolve(target) } })
         : window.setTimeout(check, 10);
     })();
@@ -109,10 +108,14 @@ class FsYoutubePlayer extends HTMLElement {
     });
 
     $e('#prevItem', 'click', (e) => {
-      e.preventDefault() || e.target.form.querySelector(':checked')?.previousElementSibling?.[__item].bullet.click();
+      e.preventDefault();
+      const checked = e.target.form.querySelector(':checked');
+      if (checked && checked.previousElementSibling) checked.previousElementSibling[__item].bullet.click();
     });
     $e('#nextItem', 'click', (e) => {
-      e.preventDefault() || e.target.form.querySelector(':checked')?.nextElementSibling?.[__item].bullet.click();
+      e.preventDefault();
+      const checked = e.target.form.querySelector(':checked');
+      if (checked && checked.nextElementSibling) checked.nextElementSibling[__item].bullet.click();
     });
     $e('#items', 'mouseenter', () => (this[__item] = false));
     $e('#items', 'touchstart', () => (this[__item] = false));
@@ -141,7 +144,8 @@ class FsYoutubePlayer extends HTMLElement {
   }
   goTo(node) {
     __item in this && delete this[__item];
-    this.player?.seekTo(+node.closest('[data-time]')?.dataset?.time, true);
+    const timeEl = node.closest('[data-time]');
+    if (timeEl && this.player) this.player.seekTo(+timeEl.dataset.time, true);
   }
 }
 

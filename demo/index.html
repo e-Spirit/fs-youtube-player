@@ -79,8 +79,8 @@
       <fs-youtube-player video-id="wMXhaMGpA1A" nocookie muted>
         <!--
           optional attributes:
-            nocookie - don't use youtube cookies in player; force GDPR
-            muted    - inital mute the video player
+            nocookie - load the player via https://youtube-nocookie.com/ to force GDPR
+            muted    - initilize video player muted
         -->
 
         <div data-time="0">
@@ -112,6 +112,43 @@
       </fs-youtube-player>
     </div>
 
-    <script type="module" src="./dist/fs-youtube-player.js"></script>
+    <footer></footer>
+
+    <script type="module">
+      const variants = [
+        { label: 'unpkg esm', src: 'https://unpkg.com/fs-youtube-player?module', module: true },
+        { label: 'unpkg umd', src: 'https://unpkg.com/fs-youtube-player' },
+      ];
+
+      if (location.hostname === 'localhost')
+        variants.unshift(
+          { label: 'local esm', src: '/dist/fs-youtube-player.js', module: true },
+          { label: 'local umd', src: '/dist/fs-youtube-player.umd.js' }
+        );
+
+      const variant = sessionStorage.getItem('fs-youtube-player') || variants[0].label;
+
+      const footer = document.body.querySelector('footer');
+      footer.innerHTML = variants
+        .map(({ label, isActive = label === variant }) =>
+          isActive ? `<span>${label}</span>` : `<a href="#">${label}</a>`
+        )
+        .join(' | ');
+
+      footer.addEventListener('click', (e) => {
+        if (e.target.matches('a')) {
+          e.preventDefault();
+          sessionStorage.setItem('fs-youtube-player', e.target.innerText);
+          location.reload();
+        }
+      });
+
+      const { src, module } = variants.find(({ label }) => label === variant) || variants[0];
+      if (module) {
+        import(src);
+      } else {
+        document.body.appendChild(document.createElement('script')).src = src;
+      }
+    </script>
   </body>
 </html>

@@ -2,27 +2,41 @@
   "name": "fs-youtube-player",
   "version": "0.0.7",
   "description": "FirstSpirits Shoppable (YouTube) Video Player - Demo",
-  "source": "src/fs-youtube-player.js",
-  "main": "dist/fs-youtube-player.js",
-  "unpkg": "dist/fs-youtube-player.js",
-  "module": "dist/fs-youtube-player.js",
+  "main": "./dist/fs-youtube-player.umd.js",
+  "module": "./dist/fs-youtube-player.js",
   "scripts": {
-    "build": "microbundle bundle ./src/fs-youtube-player.js --format esm",
-    "demo:build:watch": "microbundle watch ./src/fs-youtube-player.js --format esm --output ./demo/dist",
-    "demo:server:watch": "servor ./demo ./index.html 8080 --reload --silent --browse",
-    "demo": "concurrently npm:demo:*"
+    "clean": "rimraf ./dist",
+    "build": "rollup -c",
+    "demo": "npm run build -- --watch",
+    "format": "npm run clean && prettier --write ."
   },
+  "files": [
+    "src",
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": [
+    "e-Spirit",
+    "FirstSpirit",
+    "YouTube",
+    "Shoppable",
+    "Shoppable Video",
+    "Interactive Video"
+  ],
   "author": "e-Spirit AG",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/breidler-es/fs-youtube-player.git"
+    "url": "https://github.com/e-Spirit/fs-youtube-player.git"
   },
+  "dependencies": {},
   "devDependencies": {
-    "concurrently": "^5.2.0",
-    "microbundle": "^0.12.1",
     "prettier": "^2.0.5",
-    "servor": "^4.0.2"
+    "rimraf": "^3.0.2",
+    "rollup": "^2.23.0",
+    "rollup-plugin-serve": "^1.0.3",
+    "rollup-plugin-terser": "^6.1.0"
   },
   "prettier": {
     "arrowParens": "always",
