@@ -121,19 +121,26 @@ class FsYoutubePlayer extends HTMLElement {
     $e('#items', 'touchstart', () => (this[__item] = false));
     $e('#items', 'mouseleave', () => delete this[__item]);
 
-    const url = new URL(`https://www.youtube.com/embed/${this.videoId}?enablejsapi=1&fs=0`);
+    const url = new URL(`https://www.youtube.com/embed/${this.videoId}?enablejsapi=1`);
     this.hasAttribute('nocookie') && (url.hostname = 'www.youtube-nocookie.com');
-    url.searchParams.set('origin', location.origin);
+    
+    
 
-    if (this.hasAttribute('autoplay')) {
-      url.searchParams.append('autoplay', 1)
+    if (this.hasAttribute('fullscreen')) {
+      url.searchParams.append("fs", 1)
+      url.searchParams.append("controls", 1)
     }
 
+
+    url.searchParams.set('origin', location.origin);
     const iframe = this.shadowRoot.querySelector('iframe');
     iframe.src = url.toString();
     getYouTubePlayer(iframe).then((player) => {
       this.player = player;
       this.hasAttribute('muted') && player.mute();
+
+      this.hasAttribute('autoplay') && player.playVideo();
+
       window.setInterval(() => {
         const time = this.player.getCurrentTime();
         if (time !== this.__time && this[__item] !== false) {
@@ -142,6 +149,8 @@ class FsYoutubePlayer extends HTMLElement {
           item !== this[__item] && (this[__item] = item) && item.show();
         }
       }, 30);
+    }).catch((e)=> {
+      console.log(e)
     });
   }
   get videoId() {
