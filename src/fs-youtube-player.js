@@ -149,8 +149,6 @@ class FsYoutubePlayer extends HTMLElement {
           item !== this[__item] && (this[__item] = item) && item.show();
         }
       }, 30);
-    }).catch((e)=> {
-      console.log(e)
     });
   }
   get videoId() {
