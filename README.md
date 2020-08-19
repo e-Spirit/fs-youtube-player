@@ -37,6 +37,14 @@ Furthermore you need the script from this repository. Just use the CDN version, 
 <script defer src="https://unpkg.com/fs-youtube-player"></script>
 ```
 
+## autoplay
+
+You can use the autoplay attribute to force the video to start playing after it was loaded. But keep in mind, the autoplay videos don't count as views in youtube.
+
+```html
+<fs-youtube-player video-id="youtube-video-id" autoplay
+```
+
 ## run locally
 
 Finally start the demo with the following command:
