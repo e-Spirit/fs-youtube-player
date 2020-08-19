@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FirstSpirits Shoppable (YouTube) Video Player - Demo</title>
+    <link rel="stylesheet" href="./demo.css" />
+    <style>
+      fs-youtube-player {
+        background: linear-gradient(180deg, #efefef 0%, #fff 100%);
+      }
+      fs-youtube-player [data-time] {
+        text-align: center;
+        user-select: none;
+        font-size: 1.25em;
+        line-height: 1.2;
+      }
+      @media (max-width: 75.25rem) {
+        fs-youtube-player [data-time] {
+          font-size: 1.5vw;
+        }
+      }
+      @media (max-width: 600px) {
+        fs-youtube-player [data-time] {
+          font-size: 3.5vw;
+        }
+      }
+      fs-youtube-player img {
+        max-width: 100%;
+        object-fit: contain;
+        max-height: 100%;
+      }
+      fs-youtube-player a {
+        display: flex;
+        text-decoration: none;
+        cursor: pointer;
+        color: inherit;
+        padding: 1rem;
+        flex-direction: column;
+        flex: 1;
+        justify-content: space-between;
+        text-align: center;
+        background: #fff;
+      }
+      fs-youtube-player a .button {
+        line-height: 2.5rem;
+        text-align: center;
+        background: #000;
+        color: #fff;
+        display: block;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+      fs-youtube-player a:hover .button {
+        background: #fe4859;
+      }
+      fs-youtube-player a .picture {
+        flex: 1;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        margin: 0 0 1rem;
+      }
+      fs-youtube-player a .price {
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 1;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <hgroup>
+        <h2>Watch it. <b>Shop it:</b></h2>
+        <h3>Collection Autumn / Winter 2020.</h3>
+      </hgroup>
+
+      <fs-youtube-player video-id="wMXhaMGpA1A" nocookie muted autoplay>
+        <!--
+          optional attributes:
+            nocookie - load the player via https://youtube-nocookie.com/ to force GDPR
+            muted    - initilize video player muted
+        -->
+
+        <div data-time="0">
+          <img src="./img/icon-basket.svg" />
+          <br /><strong>You like what you see?</strong><br />
+          You can buy the<br />
+          Products from the video<br />
+          right here.
+        </div>
+
+        <div data-time="10">
+          <a href="#/boots">
+            <span class="picture" style="background-image: url('./img/boots.png');"></span>
+            Boots<br />
+            brown<br />
+            <b class="price">149,90 €</b>
+            <span class="button">Shop now</span>
+          </a>
+        </div>
+
+        <div data-time="20">
+          <a href="#/pink-shoe">
+            <span class="picture" style="background-image: url('./img/shoes.png');"></span>
+            Shoes<br />
+            <b class="price">139,90 €</b>
+            <span class="button">Shop now</span>
+          </a>
+        </div>
+      </fs-youtube-player>
+    </div>
+
+    <footer></footer>
+
+    <script type="module">
+      const variants = [
+        { label: 'unpkg esm', src: 'https://unpkg.com/fs-youtube-player?module', module: true },
+        { label: 'unpkg umd', src: 'https://unpkg.com/fs-youtube-player' },
+      ];
+
+      if (location.hostname === 'localhost')
+        variants.unshift(
+          { label: 'local esm', src: '/dist/fs-youtube-player.js', module: true },
+          { label: 'local umd', src: '/dist/fs-youtube-player.umd.js' }
+        );
+
+      const variant = sessionStorage.getItem('fs-youtube-player') || variants[0].label;
+
+      const footer = document.body.querySelector('footer');
+      footer.innerHTML = variants
+        .map(({ label, isActive = label === variant }) =>
+          isActive ? `<span>${label}</span>` : `<a href="#">${label}</a>`
+        )
+        .join(' | ');
+
+      footer.addEventListener('click', (e) => {
+        if (e.target.matches('a')) {
+          e.preventDefault();
+          sessionStorage.setItem('fs-youtube-player', e.target.innerText);
+          location.reload();
+        }
+      });
+
+      const { src, module } = variants.find(({ label }) => label === variant) || variants[0];
+      if (module) {
+        import(src);
+      } else {
+        document.body.appendChild(document.createElement('script')).src = src;
+      }
+    </script>
+  </body>
+</html>

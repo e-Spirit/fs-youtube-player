@@ -124,6 +124,11 @@ class FsYoutubePlayer extends HTMLElement {
     const url = new URL(`https://www.youtube.com/embed/${this.videoId}?enablejsapi=1&fs=0`);
     this.hasAttribute('nocookie') && (url.hostname = 'www.youtube-nocookie.com');
     url.searchParams.set('origin', location.origin);
+
+    if (this.hasAttribute('autoplay')) {
+      url.searchParams.append('autoplay', 1)
+    }
+
     const iframe = this.shadowRoot.querySelector('iframe');
     iframe.src = url.toString();
     getYouTubePlayer(iframe).then((player) => {
