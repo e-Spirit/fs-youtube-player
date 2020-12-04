@@ -85,6 +85,12 @@ class FsYoutubePlayer extends HTMLElement {
       this.items[visibleIndex].bullet.checked = true;
     });
 
+    if (this.matches(':empty')) {
+      this.items = [];
+      $s('#items-container').style.setProperty('--items-count', 0);
+      this.setAttribute('no-items', '');
+    }
+
     $e('slot', 'slotchange', () => {
       const bullets = $s('#bullets');
       bullets.innerHTML = '';
@@ -129,14 +135,16 @@ class FsYoutubePlayer extends HTMLElement {
     getYouTubePlayer(iframe).then((player) => {
       this.player = player;
       this.hasAttribute('muted') && player.mute();
-      window.setInterval(() => {
-        const time = this.player.getCurrentTime();
-        if (time !== this.__time && this[__item] !== false) {
-          this.__time = time;
-          const item = this.items.find(({ match }) => match(this.__time)) || this.items[0];
-          item !== this[__item] && (this[__item] = item) && item.show();
-        }
-      }, 30);
+      if (this.items.length) {
+        window.setInterval(() => {
+          const time = this.player.getCurrentTime();
+          if (time !== this.__time && this[__item] !== false) {
+            this.__time = time;
+            const item = this.items.find(({ match }) => match(this.__time)) || this.items[0];
+            item !== this[__item] && (this[__item] = item) && item.show();
+          }
+        }, 30);
+      }
     });
   }
   get videoId() {
